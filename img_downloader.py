@@ -1,11 +1,16 @@
 import os
 import requests
 
+# Declarations of global variables
 url = ""
 html = b'\xff'
 
 
 def link_check():
+    """
+    Checks if the link provided is correct and contents can be retrieved from it.
+    If the link is invalid, the user is asked to enter a different link.
+    """
     global url
     global html
     valid_link = False
@@ -23,6 +28,12 @@ def link_check():
 
 
 def directory_check():
+    """
+    Selects a directory where the image will be saved.
+    If a Pictures directory exists in Users or home user space directory,
+    Image_Downloader directory is created there, otherwise the user is asked
+    to specify a path where they want to save the image.
+    """
     full_dir = os.path.dirname(__file__)
     parent = os.path.abspath(os.path.join(full_dir, os.pardir))
     dirs = parent.split("\\", -1)
@@ -96,6 +107,11 @@ def directory_check():
 
 
 def extension_check():
+    """
+    Asks the user to name the image, and checks for the extension.
+
+    :return: Name with extension of the image
+    """
     name = input("\nWhat would you like to name the picture?\n")
 
     if ".png" in url:
@@ -119,11 +135,19 @@ def extension_check():
 
 
 def download(filename):
+    """
+    Downloads the image.
+
+    :param filename: The name of the image.
+    """
     with open(filename, "wb") as f:
         f.write(html)
 
 
 def run():
+    """
+    Runs the general UI and relevant functions.
+    """
     link_check()
     directory_check()
 
@@ -138,6 +162,10 @@ def run():
 
 
 def post_save():
+    """
+    After an image was saved, the user is asked whether they would like to save
+    another image or quit the program.
+    """
     while True:
         choice = input("\nWould you like to save another image?\n"
                        "[1] - Yes\n"
